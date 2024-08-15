@@ -37,7 +37,7 @@ export default function FeedScreen() {
                     // Fetch and sort photos when there are updates
                     const photoList = await getPhotos(db, username ?? "");
                     setPhotoCollection(photoList);
-                    console.log("Real-time data fetched, sorted, and state updated:", photoList);
+                    // console.log("Real-time data fetched, sorted, and state updated:", photoList);
                 } catch (error) {
                     console.error('Error resolving promises:', error);
                 }

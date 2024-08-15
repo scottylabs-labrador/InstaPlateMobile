@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet, Dimensions, Alert } from 'react-native';
 import { useState, useCallback } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 
@@ -58,7 +58,7 @@ export default function UploadScreen() {
         const response = await fetch(selectedImage);
         const blob = await response.blob();
 
-        const imgName = `${Date.now()}.jpg`
+        const imgName = `${Date.now()}.jpg`;
         const storageRef = ref(getStorage(), `images/${imgName}`);
 
         uploadBytes(storageRef, blob).then(async (snapshot) => {
@@ -74,6 +74,8 @@ export default function UploadScreen() {
             await setDoc(doc(db, "Users", username ?? ''), {
                 Posts: arrayUnion(imgName)
             }, { merge: true });
+
+            Alert.alert('Note', 'Your photo has been uploaded!')
         }).catch((error) => {
             console.error('Error uploading image:', error);
         });

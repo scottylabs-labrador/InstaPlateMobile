@@ -5,3 +5,14 @@ export interface Photo {
     uploadTime: Timestamp;
     userId: string;
 }
+
+export interface selectPhotoProps {
+    selectedImage?: string;
+    setSelectedImage: React.Dispatch<React.SetStateAction<string>>;
+}
+
+export interface uploadProfileImageProps {
+    selectedImage: string;
+    setSelectedImage: React.Dispatch<React.SetStateAction<string>>;
+    username?: string;
+}
