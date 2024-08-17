@@ -11,28 +11,29 @@ interface PostProps {
 
 // 'https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg'
 
-const Post = ({item}:PostProps) => {
-    // Do this to get the timeStamp
-    // const [timestamp, setTimestamp] = useState();
+const Post = ({ item }: PostProps) => {
+    // Get the timestamp and put in desired format
+    // const [timestamp, setTimestamp] = useState("");
     // if (item.uploadTime) {
-    //     console.log(item.uploadTime.toDate());
+    //     setTimestamp(item.uploadTime.toDate().toDateString().split(" ")[1] + " " + item.uploadTime.toDate().toDateString().split(" ")[2])
     // }
-    
+
 
     return (
-        <View style={styles.postContainer}>
-            <View style={styles.userNameContainer}>
-                <ThemedText>{item.userId}</ThemedText>
-            </View>
+        <ThemedView style={styles.postContainer}>
+            <ThemedView style={styles.postHeaderContainer}>
+                <ThemedText style={styles.usernameText}>{item.userId}</ThemedText>
+                <ThemedText style={styles.dateText}>{item.uploadTime.toDate().toDateString().split(" ")[1] + " " + item.uploadTime.toDate().toDateString().split(" ")[2]}</ThemedText>
+            </ThemedView>
             <ThemedView style={styles.imageContainer}>
-                <Image 
+                <Image
                     style={styles.image}
-                    source={{uri: item.reference}}
+                    source={{ uri: item.reference }}
                     resizeMode="contain"
                 />
             </ThemedView>
 
-        </View>
+        </ThemedView>
     )
 }
 
@@ -45,18 +46,26 @@ const styles = StyleSheet.create({
     postContainer: {
         // backgroundColor: 'gray',
         borderColor: 'gray',
-        borderWidth: 1,
-        paddingBottom: 2,
+        // borderWidth: 1,
+        paddingBottom: 20,
     },
     imageContainer: {
         // backgroundColor: '#c2c2c2',
         height: 400,
         justifyContent: 'center',
     },
-    userNameContainer: {
+    postHeaderContainer: {
         // backgroundColor: 'white',
-        padding: 3,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
         paddingTop: 10,
-        paddingLeft: 6,
+        paddingBottom: 15,
+        paddingHorizontal: 6,
+    },
+    dateText: {
+        // textAlign: 'right'
+    },
+    usernameText: {
+        fontWeight: 'bold',
     }
 })
