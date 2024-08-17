@@ -48,13 +48,15 @@ export async function getGridPhotos(db: any, currentUsername: string) {
     const userDocSnap = await getDocFromServer(userDocRef);
     if (userDocSnap.exists()) {
         // console.log("Document data:", userDocSnap.data()["Posts"]);
-        const uris = userDocSnap.data()["Posts"];
+        const uris = userDocSnap.data()["Posts"].reverse(); // reverse the order of the array elements so that the most recently uploaded photo comes first in the grid
 
         // Resolve all the promises returned by getPhotoURL
         const resolvedUris = await Promise.all(uris.map(async (uri: string, index: number) => ({
             id: (index + 1).toString(), // id starts from 1
             uri: await getPhotoURL(uri) // Wait for each getPhotoURL call to resolve
         })));
+
+        // Sort the resolved resolved URIs by id in descending order
 
         // Return the resolved URIs
         return resolvedUris;
