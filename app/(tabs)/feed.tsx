@@ -11,7 +11,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 
 import { ScrollView, StyleSheet } from 'react-native';
-import { getPhotos, getPhotoURL } from '@/components/utils/dataUtils';
+import { getPhotos } from '@/components/utils/dataUtils';
 import TextBanner from '@/components/TextBanner';
 
 import { useUser } from "@clerk/clerk-expo";
@@ -31,6 +31,7 @@ export default function FeedScreen() {
             const photosCol = collection(db, 'Photos');
 
             console.log("focus on feed");
+
             // Set up the listener for real-time updates
             const unsubscribe = onSnapshot(photosCol, async (snapshot) => {
                 try {
@@ -76,7 +77,6 @@ export default function FeedScreen() {
                         <Post key={index} item={doc} />
                     ))}
                 </ScrollView>
-
             </SafeAreaView>
         </ThemedView>
     )

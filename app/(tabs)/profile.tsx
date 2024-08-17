@@ -50,8 +50,9 @@ export default function ProfileScreen() {
     useCallback(() => {
       const fetchPhotos = async () => {
         // check to see if there is a profile image uploaded, if so set image
-        getProfilePhoto({db, currentUsername:username, setSelectedImage});
-        // get photos from Posts
+        getProfilePhoto({ db, currentUsername: username, setSelectedImage });
+
+        // get photos from Posts field in each document in the Users collection
         const data = await getGridPhotos(db, username ?? "");
         console.log(data);
         setPhotos(data);
@@ -72,21 +73,21 @@ export default function ProfileScreen() {
           ></TextBanner>
           <View style={styles.pfpLogout}>
             <View style={styles.profilePicContainer}>
-              <ProfileImageViewer placeholderImageSource={PlaceholderImage} 
-              selectedImage={selectedImage} setSelectedImage={setSelectedImage} username={username}/>
+              <ProfileImageViewer placeholderImageSource={PlaceholderImage}
+                selectedImage={selectedImage} setSelectedImage={setSelectedImage} username={username} />
               <ThemedText>{user?.fullName ?? ""}</ThemedText>
             </View>
-            <Pressable onPress={handleLogout} style={({pressed}) => [
+            <Pressable onPress={handleLogout} style={({ pressed }) => [
               {
                 backgroundColor: pressed ? '#c7c7c7' : '#D9D9D9',
               },
-              styles.logoutBtn,]} 
+              styles.logoutBtn]}
             >
               <ThemedText>Logout</ThemedText>
             </Pressable>
           </View>
           
-          <GridView data={photos} />
+            <GridView data={photos} />
         </SignedIn>
       </SafeAreaView>
       <SafeAreaView>
