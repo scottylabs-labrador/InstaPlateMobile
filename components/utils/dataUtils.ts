@@ -1,27 +1,23 @@
 import React from "react";
 
 import { db } from '@/firebaseConfig';
-import { collection, doc, getDoc, arrayUnion, setDoc, Timestamp, getDocsFromServer, getDocFromServer } from 'firebase/firestore';
+import { collection, doc, getDoc, setDoc, getDocsFromServer, getDocFromServer } from 'firebase/firestore';
 import { ref, getStorage, uploadBytes, getDownloadURL } from "firebase/storage";
 
-import ImageViewer from '@/components/ImageViewer';
 import * as ImagePicker from 'expo-image-picker';
 import * as ImageManipulator from 'expo-image-manipulator';
-import { selectPhotoProps, uploadProfileImageProps } from "./types";
+import { uploadProfileImageProps } from "./types";
 import { Alert } from "react-native";
 
 export const getPhotoURL = async (docId: string) => {
-    // docId: 09ef0f36-c512-4626-a967-765b148478fc
     const storage = getStorage();
     try {
         const reference = ref(storage, '/images/' + docId);
         const url = await getDownloadURL(reference);
         return url;
     } catch {
-        // console.log(docId);
         return 'https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg';
     }
-
 }
 
 export async function getPhotos(db: any, currentUsername: String) {
@@ -47,7 +43,6 @@ export async function getGridPhotos(db: any, currentUsername: string) {
     const userDocRef = doc(db, 'Users', currentUsername);
     const userDocSnap = await getDocFromServer(userDocRef);
     if (userDocSnap.exists()) {
-        // console.log("Document data:", userDocSnap.data()["Posts"]);
         const uris = userDocSnap.data()["Posts"].reverse(); // reverse the order of the array elements so that the most recently uploaded photo comes first in the grid
 
         // Resolve all the promises returned by getPhotoURL
@@ -55,8 +50,6 @@ export async function getGridPhotos(db: any, currentUsername: string) {
             id: (index + 1).toString(), // id starts from 1
             uri: await getPhotoURL(uri) // Wait for each getPhotoURL call to resolve
         })));
-
-        // Sort the resolved resolved URIs by id in descending order
 
         // Return the resolved URIs
         return resolvedUris;
@@ -97,13 +90,6 @@ export const uploadProfileImage = async ({selectedImage, setSelectedImage, usern
 
     uploadBytes(storageRef, blob).then(async (snapshot) => {
 
-        // profile picture will not be included in the Photos collection
-        // await setDoc(doc(db, "Photos", imgName), {
-        //     reference: `/boilerplate-7545b.appspot.com/images/${imgName}`,
-        //     userId: username,
-        //     uploadTime: Timestamp.now()
-        // });
-
         await setDoc(doc(db, "Users", username ?? ''), {
             ProfileImage: imgName
         }, { merge: true });
@@ -118,14 +104,12 @@ interface getProfilePhotoProps {
     db: any,
     currentUsername?: string,
     setSelectedImage:  React.Dispatch<React.SetStateAction<string>>,
-    // selectedImage: string,
   };
 
 export const getProfilePhoto = async({db, currentUsername, setSelectedImage}: getProfilePhotoProps) => {
     const userDocRef = doc(db, 'Users', currentUsername ?? "");
     const docSnap = await getDoc(userDocRef);
     if (docSnap.exists()) {
-        // console.log("Profile Image:", docSnap.data().ProfileImage);
         const imgURL = await getSinglePhoto(docSnap.data().ProfileImage);
         setSelectedImage(()=>imgURL);
         } else {
@@ -144,17 +128,4 @@ export const getSinglePhoto = async(imgName?:string) => {
         return downloadURL;
     }
     return "";
-    
 }
-
-
-// const getSingleDoc = async() => {
-//     const docRef = doc(db, "Photos", "09ef0f36-c512-4626-a967-765b148478fc");
-//     const docSnap = await getDoc(docRef);
-//     if (docSnap.exists()) {
-//         console.log("Document data:", docSnap.data());
-//       } else {
-//         // docSnap.data() will be undefined in this case
-//         console.log("No such document");
-//     }
-// }

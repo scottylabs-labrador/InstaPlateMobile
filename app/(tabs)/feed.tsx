@@ -1,13 +1,11 @@
-import ParallaxScrollView from '@/components/ParallaxScrollView';
 import Post from '@/components/Post';
-import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { db } from '@/firebaseConfig';
 import { collection, onSnapshot } from 'firebase/firestore';
 
-import { useEffect, useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 
 import { ScrollView, StyleSheet } from 'react-native';
@@ -38,27 +36,10 @@ export default function FeedScreen() {
                     // Fetch and sort photos when there are updates
                     const photoList = await getPhotos(db, username ?? "");
                     setPhotoCollection(photoList);
-                    // console.log("Real-time data fetched, sorted, and state updated:", photoList);
                 } catch (error) {
                     console.error('Error resolving promises:', error);
                 }
             });
-
-
-            //   const func = () => {
-            //     getPhotos(db).then(async (photoSnapshot) => {
-            //       try {
-            //         console.log("feed retrieved");
-            //         const results = await Promise.all(photoSnapshot);
-            //         setPhotoCollection(results);
-            //         // Now 'results' is an array of objects
-            //       } catch (error) {
-            //         console.error('Error resolving promises:', error);
-            //       }
-            //     });
-            //   };
-
-            //   func();
 
             // Clean up the listener when the screen is unfocused or unmounted
             return () => {
@@ -70,7 +51,7 @@ export default function FeedScreen() {
 
     return (
         <ThemedView style={{ flex: 1 }}>
-            <SafeAreaView >
+            <SafeAreaView>
                 <TextBanner text={"Feed"} />
                 <ScrollView>
                     {photoCollection && photoCollection.map((doc: any, index: number) => (

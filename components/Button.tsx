@@ -3,7 +3,6 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { type IconProps } from '@expo/vector-icons/build/createIconSet';
 
 type OnPressHandler = (event: GestureResponderEvent) => void;
 
@@ -57,8 +56,6 @@ const styles = StyleSheet.create({
     buttonContainer: {
         height: 68,
         marginHorizontal: 20,
-        // alignItems: 'center',
-        // justifyContent: 'center',
         padding: 3,
     },
     button: {
@@ -73,7 +70,6 @@ const styles = StyleSheet.create({
         paddingRight: 8,
     },
     buttonLabel: {
-        // color: '#fff',
         fontSize: 16,
     },
 });

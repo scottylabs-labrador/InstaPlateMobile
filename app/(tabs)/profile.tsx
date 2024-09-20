@@ -1,17 +1,12 @@
-import Ionicons from '@expo/vector-icons/Ionicons';
-import { StyleSheet, Image, Platform, View, Button, Pressable } from 'react-native';
+import { StyleSheet, View, Pressable } from 'react-native';
 
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import BannerView from '@/components/BannerView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { TextBanner } from '@/components/TextBanner';
 
-import { SignedIn, SignedOut, useUser } from "@clerk/clerk-expo";
+import { SignedIn, useUser } from "@clerk/clerk-expo";
 import { useRouter } from "expo-router";
 import { SafeAreaView } from 'react-native-safe-area-context';
-
-// import Button from '@/components/Button';
 
 import { useClerk } from '@clerk/clerk-expo';
 import GridView from '@/components/GridView';
@@ -21,7 +16,6 @@ import { getGridPhotos, getProfilePhoto } from '@/components/utils/dataUtils';
 
 import { useState, useCallback } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
-import ProfileIcon from '@/components/ProfileIcon';
 import ProfileImageViewer from '@/components/ProfileImageViewer';
 
 export default function ProfileScreen() {
@@ -86,7 +80,6 @@ export default function ProfileScreen() {
               <ThemedText>Logout</ThemedText>
             </Pressable>
           </View>
-          
             <GridView data={photos} />
         </SignedIn>
       </SafeAreaView>
@@ -109,7 +102,6 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    // padding: 20,
   },
   logoutBtn: {
     width: 160,

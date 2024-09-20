@@ -13,7 +13,6 @@ type TextBannerProps = {
 export const TextBanner = ({ text }: TextBannerProps) => {
   return (
     <ThemedView style={styles.bannerContainer}>
-      {/* <Ionicons name="ios-information-circle" size={24} color="black" style={styles.icon} /> */}
       <ThemedText style={styles.bannerText}>{text}</ThemedText>
     </ThemedView>
   );
@@ -22,7 +21,6 @@ export const TextBanner = ({ text }: TextBannerProps) => {
 const styles = StyleSheet.create({
   bannerContainer: {
     padding: 10,
-    // backgroundColor: '#f8f8f8',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',

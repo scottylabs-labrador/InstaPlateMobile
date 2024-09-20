@@ -1,6 +1,5 @@
-import React, { useState } from "react";
 import { Photo } from "./utils/types";
-import { Image, View, StyleSheet } from "react-native";
+import { Image, StyleSheet } from "react-native";
 import { ThemedText } from "./ThemedText";
 import { ThemedView } from "./ThemedView";
 
@@ -9,16 +8,7 @@ interface PostProps {
     item: Photo,
 }
 
-// 'https://i.natgeofe.com/n/548467d8-c5f1-4551-9f58-6817a8d2c45e/NationalGeographic_2572187_square.jpg'
-
 const Post = ({ item }: PostProps) => {
-    // Get the timestamp and put in desired format
-    // const [timestamp, setTimestamp] = useState("");
-    // if (item.uploadTime) {
-    //     setTimestamp(item.uploadTime.toDate().toDateString().split(" ")[1] + " " + item.uploadTime.toDate().toDateString().split(" ")[2])
-    // }
-
-
     return (
         <ThemedView style={styles.postContainer}>
             <ThemedView style={styles.postHeaderContainer}>
@@ -32,7 +22,6 @@ const Post = ({ item }: PostProps) => {
                     resizeMode="contain"
                 />
             </ThemedView>
-
         </ThemedView>
     )
 }
@@ -44,18 +33,14 @@ const styles = StyleSheet.create({
         height: 400,
     },
     postContainer: {
-        // backgroundColor: 'gray',
         borderColor: 'gray',
-        // borderWidth: 1,
         paddingBottom: 20,
     },
     imageContainer: {
-        // backgroundColor: '#c2c2c2',
         height: 400,
         justifyContent: 'center',
     },
     postHeaderContainer: {
-        // backgroundColor: 'white',
         flexDirection: 'row',
         justifyContent: 'space-between',
         paddingTop: 10,

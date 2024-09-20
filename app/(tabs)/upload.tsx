@@ -8,8 +8,6 @@ import * as ImagePicker from 'expo-image-picker';
 
 import { useRouter } from "expo-router";
 
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -25,8 +23,6 @@ import { arrayUnion, doc, setDoc, Timestamp } from "firebase/firestore";
 import { ref, getStorage, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 const { width, height } = Dimensions.get('window');
-// console.log(width);
-// console.log(height);
 
 const PlaceholderImage = require('../../assets/images/placeholder.jpg');
 
@@ -121,21 +117,16 @@ export default function UploadScreen() {
 
 const styles = StyleSheet.create({
     container: {
-        // display: "flex",
         flex: 1,
         justifyContent: 'center', // Centers children vertically
         alignItems: 'center', // Centers children horizontally
         backgroundColor: '#fff',
     },
     imageContainer: {
-        // flex: 1,
-        // paddingTop: 20,
-        width: width * 0.95, // 90% of the screen width
-        height: height * 0.5, // 50% of the screen height
+        width: width * 0.95,
+        height: height * 0.5, 
     },
     footerContainer: {
-        // flex: 1 / 3,
-        // alignItems: 'center',
         top: height * 0.02
     },
 });
