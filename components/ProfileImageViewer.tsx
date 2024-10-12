@@ -1,6 +1,6 @@
-import { StyleSheet, Image, ImageSourcePropType, Dimensions, View, Pressable } from 'react-native';
+import { StyleSheet, Image, ImageSourcePropType, View, Pressable } from 'react-native';
 
-import { pickProfileImageAsync, uploadProfileImage } from './utils/dataUtils';
+import { pickProfileImageAsync } from './utils/dataUtils';
 
 type Props = {
   placeholderImageSource: ImageSourcePropType,

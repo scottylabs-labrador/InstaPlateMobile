@@ -6,8 +6,8 @@ import { useFocusEffect } from '@react-navigation/native';
 import * as ImageManipulator from 'expo-image-manipulator';
 import * as ImagePicker from 'expo-image-picker';
 
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
+import { useRouter } from "expo-router";
+
 import { ThemedView } from '@/components/ThemedView';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -23,15 +23,14 @@ import { arrayUnion, doc, setDoc, Timestamp } from "firebase/firestore";
 import { ref, getStorage, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 const { width, height } = Dimensions.get('window');
-// console.log(width);
-// console.log(height);
 
-const PlaceholderImage = require('../../assets/images/react-logo.png');
+const PlaceholderImage = require('../../assets/images/placeholder.jpg');
 
 export default function UploadScreen() {
     const { user } = useUser();
     const username = user?.emailAddresses[0]["emailAddress"];
-    // console.log(user?.emailAddresses[0]["emailAddress"]);
+
+    const router = useRouter();
 
     const [selectedImage, setSelectedImage] = useState("");
 
@@ -49,6 +48,8 @@ export default function UploadScreen() {
                 { compress: 0.7, format: ImageManipulator.SaveFormat.JPEG }
             );
             setSelectedImage(manipResult.uri);
+        } else {
+            router.replace("/feed");
         }
     };
 
@@ -75,8 +76,9 @@ export default function UploadScreen() {
                 Posts: arrayUnion(imgName)
             }, { merge: true });
 
-            Alert.alert('Note', 'Your photo has been uploaded!')
+            Alert.alert('InstaPlate', 'Your photo has been uploaded!');
         }).catch((error) => {
+            Alert.alert('InstaPlate', 'There was an error with uploading your photo :(');
             console.error('Error uploading image:', error);
         });
 
@@ -89,6 +91,7 @@ export default function UploadScreen() {
 
             // Optional cleanup function
             return () => {
+                setSelectedImage("");
                 console.log('Screen is unfocused');
             };
         }, [])
@@ -102,8 +105,8 @@ export default function UploadScreen() {
                     <ImageViewer placeholderImageSource={PlaceholderImage} selectedImage={selectedImage} />
                 </ThemedView>
                 <ThemedView style={styles.footerContainer}>
-                    <Button label="Choose a photo" theme="primary" onPress={pickImageAsync} width={width * 0.8} height={68} />
                     <Button label="Use this photo" onPress={uploadImage} width={width * 0.8} height={68} />
+                    <Button label="Choose another photo" theme="primary" onPress={pickImageAsync} width={width * 0.8} height={68} />
                 </ThemedView>
                 <StatusBar style="auto" />
             </SafeAreaView>
@@ -114,21 +117,16 @@ export default function UploadScreen() {
 
 const styles = StyleSheet.create({
     container: {
-        // display: "flex",
         flex: 1,
         justifyContent: 'center', // Centers children vertically
         alignItems: 'center', // Centers children horizontally
         backgroundColor: '#fff',
     },
     imageContainer: {
-        // flex: 1,
-        // paddingTop: 20,
-        width: width * 0.95, // 90% of the screen width
-        height: height * 0.5, // 50% of the screen height
+        width: width * 0.95,
+        height: height * 0.5, 
     },
     footerContainer: {
-        // flex: 1 / 3,
-        // alignItems: 'center',
         top: height * 0.02
     },
 });
